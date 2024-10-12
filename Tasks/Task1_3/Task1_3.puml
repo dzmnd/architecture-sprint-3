@@ -1,0 +1,29 @@
+@startuml
+
+title ER-диаграмма smart-home
+
+entity "HeatingSystem" as HeatingSystem {
+    + Id : Long
+    + IsOn : boolean
+    + TargetTemperature : double
+    + CurrentTemperature : double
+}
+
+entity "TemperatureSensor" as TemperatureSensor {
+    + Id : Long
+    + CurrentTemperature : double
+    + LastUpdated : LocalDateTime
+}
+
+HeatingSystem ||--o{ TemperatureSensor
+
+' Display settings
+skinparam entity {
+    BackgroundColor #E0E0E0
+    BorderColor #000000
+}
+skinparam rectangle {
+    BackgroundColor #FFFFFF
+}
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title Умный дом
+
+top to bottom direction
+
+Person(User, "User", "Пользователь умного дома")
+Person(Engineer, "Engineer", "Инжинер по настройке устройств")
+System("SmartHomeSystem", "Управление и Мониторинг Устройств")
+
+Container_Boundary(SmartHomeSystem, "Smart Home System") {
+  Container(ManageDevice, "Монолит", "Java")
+  Container(Database, "Database", "PostgreSQL", "Данные об устройствах")
+}
+
+System_Ext(Device, "Система отопления")
+
+Rel(User, ManageDevice, "Вкл устройтсво")
+Rel(User, ManageDevice, "Выкл устройтсво")
+Rel(User, ManageDevice, "Получение данных о температуре")
+Rel(User, ManageDevice, "Устрановка температуры")
+Rel(Engineer, ManageDevice, "Обновление устройств")
+Rel(Engineer, ManageDevice, "Получение данных об устройстве")
+Rel(ManageDevice, Database, "Чтение данных")
+Rel(ManageDevice, Database, "Запись данных")
+Rel(ManageDevice, Device, "Вкл устройтсво")
+Rel(ManageDevice, Device, "Выкл устройтсво")
+Rel(ManageDevice, Device, "Устрановка температуры")
+Rel(ManageDevice, Device, "Получение данных о температуре")
+Rel(Device, Database, "Запись данных о текущем состоянии")
+
+@enduml

@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: Smart Home
+  description: Smart Home
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/heating
+    description: Local Dev
+paths:
+  /{id}:
+    get:
+      tags:
+        - HeatingSystem
+      summary: Получение отопительной системы по Id
+      operationId: getHeatingSystem
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HeatingSystemDto"
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /device/{id}:
+    put:
+      tags:
+        - HeatingSystem update
+      summary: Обновление отопительной системы по Id
+      operationId: getHeatingSystem
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+        - body:
+            content:
+              application/x-www-form-urlencoded:
+                schema:
+                  $ref: "#/components/schemas/HeatingSystemDto"
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HeatingSystemDto"
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /{id}/turn-on:
+    post:
+      tags:
+        - On HeatingSystem
+      summary: Включение отопительной системы по Id
+      operationId: turnOn
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+  /{id}/turn-off:
+    post:
+      tags:
+        - Off HeatingSystem
+      summary: Выключение отопительной системы по Id
+      operationId: turnOff
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+  /{id}/set-temperature:
+    post:
+      tags:
+        - Set Temperature HeatingSystem
+      summary: Установка заданной температуры отопительной системы по Id
+      operationId: setTargetTemperature
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+        - body:
+            content:
+              application/json:
+                schema:
+                  name: temperature
+                  type: double
+  /{id}/current-temperature:
+    get:
+      tags:
+        - Get Current Temperature HeatingSystem
+      summary: Получение текущей температуры отопительной системы по Id
+      operationId: getCurrentTemperature
+      parameters:
+        - in: query
+          name: id
+          description: id отопительной системы
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: long
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    HeatingSystemDto:
+        type: object
+        properties:
+          id:
+            type: long
+            description: id системы
+            example: 9999
+          isOn:
+            type: boolean
+            description: on/off
+            example: true
+          targetTemperature:
+            type: double
+            description: заданная температура
+            example: 24,0
+          currentTemperature:
+            type: double
+            description: заданная температура
+            example: 21,0
+    Error:
+        type: object
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            description: внутренняя ошибка сервера
+            example: 500
+            message:
+              type: string
+              description: сообщение об ошибке
+              example: сервер временно не доступен

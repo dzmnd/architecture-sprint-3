@@ -5,5 +5,6 @@ markdown_extensions:
 plugins:
   - plantuml:
       puml_url: https://www.plantuml.com/plantuml/
-
+  - render_swagger:
+      allow_arbitrary_locations : true
 

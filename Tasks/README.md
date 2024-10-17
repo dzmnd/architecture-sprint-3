@@ -168,4 +168,6 @@ spring:
 
 # Задание 1.4.
 
-[Сгененрированная документация](./Task1_4/site)
+[swagger.yml](./Task1_4/docs/docs/Swagger.yml)
+
+![png](./Task1_4/Task1_4.png)

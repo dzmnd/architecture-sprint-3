@@ -1,0 +1,62 @@
+@startuml
+
+title ER-диаграмма smart-home
+
+entity "User" as User {
+    + Id : Guid
+    + FullName: string
+    + Phone : string
+    + Email : string
+}
+
+entity "SmartHome" as SmartHome {
+    + Id : Guid
+    + Name : string
+    --
+    + UserId : Guid
+}
+
+entity "HeatingSystem" as HeatingSystem {
+    + Id : Long
+    + IsOn : boolean
+    + TargetTemperature : double
+    + CurrentTemperature : double
+}
+
+entity "TemperatureSensor" as TemperatureSensor {
+    + Id : Long
+    + CurrentTemperature : double
+    + LastUpdated : LocalDateTime
+}
+
+entity "HomeHeatingSystem" as HomeHeatingSystem {
+    + Id : Guid
+    --
+    + HomeId : Guid
+    + HeatingSystemId : Long
+}
+
+entity SmartHomeTelemetry {
+    + Id : Guid
+    --
+    + HomeId : Guid
+    --
+    * data
+}
+
+User ||--o{ SmartHome
+SmartHome ||..|| HomeHeatingSystem
+SmartHome ||..|| SmartHomeTelemetry
+HomeHeatingSystem ||..|| HeatingSystem
+HeatingSystem ||--o{ TemperatureSensor
+
+' Display settings
+skinparam entity {
+    BackgroundColor #E0E0E0
+    BorderColor #000000
+}
+skinparam rectangle {
+    BackgroundColor #FFFFFF
+}
+
+@enduml
